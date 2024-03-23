@@ -3,10 +3,48 @@ import { StyleSheet, Text } from "react-native";
 import CategoriesScreen from "./screens/CategoriesScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailScreen from "./screens/MealDetailScreen";
+import FavoritesScreen from "./screens/FavoritesScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigator() {
+	return (
+		<Drawer.Navigator
+			screenOptions={{
+				headerStyle: { backgroundColor: "#7a0000" },
+				sceneContainerStyle: { backgroundColor: "#812525" },
+				drawerContentStyle: { backgroundColor: "#a04242" },
+				drawerActiveTintColor: "#7a0000",
+				drawerActiveBackgroundColor: "#dd8080",
+				drawerInactiveTintColor: "white",
+				headerTintColor: "white",
+			}}
+		>
+			<Drawer.Screen
+				name="MealsCategories"
+				component={CategoriesScreen}
+				options={{
+					title: "All Categories",
+					headerTitleAlign: "center",
+					drawerIcon: ({ color, size }) => <Ionicons name="list" color={color} size={size} />,
+				}}
+			/>
+			<Drawer.Screen
+				name="Favorites"
+				component={FavoritesScreen}
+				options={{
+					headerTitleAlign: "center",
+					drawerIcon: ({ color, size }) => <Ionicons name="star" color={color} size={size} />,
+				}}
+			/>
+		</Drawer.Navigator>
+	);
+}
 
 export default function App() {
 	return (
@@ -21,13 +59,14 @@ export default function App() {
 					}}
 				>
 					<Stack.Screen
-						name="MealsCategories"
-						component={CategoriesScreen}
+						name="MainDrawer"
+						// component={CategoriesScreen}
+						component={DrawerNavigator}
 						options={{
-							title: "All Categories",
-							fontSize: 7,
-							headerTitleAlign: "center",
-							headerShown: true,
+							// title: "All Categories",
+							headerShown: false,
+							// fontSize: 7,
+							// headerTitleAlign: "center",
 						}}
 					/>
 					<Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
